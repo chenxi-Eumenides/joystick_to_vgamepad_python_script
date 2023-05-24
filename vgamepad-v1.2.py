@@ -769,5 +769,5 @@ class Gamepad():
 
 if __name__ == "__main__":
     gp = Gamepad()
-    gp.log = True
+    # gp.log = True
     gp.start()
