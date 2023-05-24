@@ -199,6 +199,7 @@ class Gamepad():
         self.__recording_cache__: list[str] = []
         # 录制文件保存路径
         self.record_file_path: str = './record.txt'
+
         # 标识符
         # 是否开始log
         self.log: bool = False
@@ -393,6 +394,8 @@ class Gamepad():
 
     def __run_script__(self, name: str) -> None:
         self.__script_running__ = True
+
+        print(name)
         pass
 
     def __stop_script__(self) -> None:
