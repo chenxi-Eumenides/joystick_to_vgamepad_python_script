@@ -58,8 +58,8 @@ vg.start()
 #### English
 - [x] Get joystick input
 - [x] Virtual joystick output
-- [ ] Macro support (v0.1.1 seems to work, but you have to write your own code tochange it, and I haven't written the usage, so I have to figure it out myself)
-- [ ] Record macros (v0.3.0-alpha.1 now has the ability to record to a txt file, butit can't be triggered yet)
+- [ ] Macro support (v0.1.1 seems to work, but you have to write your own code to change it, and I haven't written the usage, so you must think it by yourself)
+- [ ] Record macros (v0.3.0-alpha.1 now has the ability to record to a txt file, but it can't be triggered yet)
 - [ ] Hover window interface
 - [ ] The macro menu is fully implemented with the joystick
 
