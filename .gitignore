@@ -1,5 +1,5 @@
-*.txt
+record.txt
 test.py
 python_script.code-workspace
-__pycache__
-history_version
+__pycache__/
+history_version/

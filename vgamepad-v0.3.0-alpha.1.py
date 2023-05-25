@@ -1,4 +1,3 @@
-from threading import Thread
 from time import sleep, time
 
 from components.Gamepad import Gamepad
@@ -20,6 +19,7 @@ class Virtual_Gamepad():
         self.gamepad = Gamepad()
         self.script_manager = Script_Manager()
         self.keys = default_keys
+        self.log = is_log
 
         # 运行开始时间
         self.__start_time__: float = time()
@@ -59,7 +59,7 @@ class Virtual_Gamepad():
             #     for key_id, key_value in changed_keys:
             #         self.__record__(key_id, key_value)
             # 输出log
-            if is_log:
+            if self.log:
                 update = {}
                 for key in self.keys.values():
                     if key.__status__ == 1:
