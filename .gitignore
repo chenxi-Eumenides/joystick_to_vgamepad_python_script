@@ -1,5 +1,9 @@
 record.txt
 test.py
-python_script.code-workspace
+*.spec
+*.code-workspace
 __pycache__/
 history_version/
+dist/
+build/
+public/

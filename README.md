@@ -4,7 +4,11 @@
 This is a python script that allows any gamepad to support macros, which can be triggered by both menus and keystrokes. Currently only windows is supported (because the vgamepad module only supports Windows).
 
 #### 中文介绍
-这是一个让任何手柄支持宏功能的python脚本(基于[`pygame`](https://github.com/pygame/pygame)和[`vgamepad`](https://github.com/yannbouteiller/vgamepad)模块)，可以通过菜单和按键两种方式触发宏。目前只支持window平台（因为vgamepad模块只支持windows。）
+这是一个让任何手柄支持宏功能的python脚本(基于[`pygame`](https://github.com/pygame/pygame)和[`vgamepad`](https://github.com/yannbouteiller/vgamepad)模块)，可以通过菜单和按键两种方式触发宏。
+
+目前只支持window平台(因为vgamepad模块只支持windows)。
+
+exe使用pyinstaller打包。
 
 ## **not finished !!  没完成！！**
 
@@ -82,5 +86,6 @@ todo
 
 Thanks for [`vgamepad`](https://github.com/yannbouteiller/vgamepad) module. i use it to create a virtual gamepad. \
 Thanks for [`pygame`](https://github.com/pygame/pygame) module. i use it to get real joystick input. \
-Thanks for [`chatgpt`](https://chat.openai.com/chat). i am not a professional developer and chatgpt has helped me a lot.
+Thanks for [`chatgpt`](https://chat.openai.com/chat). i am not a professional developer and chatgpt has helped me a lot. \
+Thanks for [`pyinstaller`]().
 
