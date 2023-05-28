@@ -1,16 +1,18 @@
 # **joystick_to_vgamepad_python_script**
 
-#### English introduce
-This is a python script that allows any gamepad to support macros, which can be triggered by both menus and keystrokes. Currently only windows is supported (because the vgamepad module only supports Windows).
+## English introduce
 
-#### 中文介绍
+This is a python script (based on the [`pygame`](https://github.com/pygame/pygame) and [`vgamepad`](https://github.com/yannbouteiller/vgamepad) modules) that allows any gamepad to support macros, which can be triggered by both menus and keystrokes.
+
+Currently only windows is supported (because the vgamepad module only supports Windows).
+
+## 中文介绍
+
 这是一个让任何手柄支持宏功能的python脚本(基于[`pygame`](https://github.com/pygame/pygame)和[`vgamepad`](https://github.com/yannbouteiller/vgamepad)模块)，可以通过菜单和按键两种方式触发宏。
 
 目前只支持window平台(因为vgamepad模块只支持windows)。
 
-exe使用pyinstaller打包。
-
-## **not finished !!  没完成！！**
+## **didn`t finished !!  没完成！！**
 
 # How to use
 
@@ -67,11 +69,11 @@ todo
 #### English
 - [x] Get joystick input
 - [x] Virtual joystick output
-- [x] Macro support (v0.1.1 seems to work, but you have to write your own code to change it, and I haven't written the usage, so you must think it by yourself)
-- [x] Record macros (v0.3.0-alpha.1 now has the ability to record to a txt file, but it can't be triggered yet)
+- [x] Macro support (v0.3 seems to be working, but I'm not sure how many bugs it has)
+- [x] Record macros (v0.3 can only be recorded into txt files, you need to write macros according to txt)
 - [ ] Hover window interface
 - [ ] The macro menu is fully implemented with the joystick
-- [x] Multi-language support
+- [x] Multi-language support (Translate language files by yourself lol~)
 
 #### 中文
 - [x] 获取手柄输入
