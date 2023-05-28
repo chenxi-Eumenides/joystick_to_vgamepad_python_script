@@ -1,16 +1,16 @@
 from vgamepad import VX360Gamepad, XUSB_BUTTON
 from .Keys import Key
-from time import sleep
+from time import sleep, time
 from typing import Union
 
 
 class Gamepad():
     def __init__(self) -> None:
-        '''导入并初始化vgamepad
+        '''
         '''
         # 初始化gamepad
-        self.gamepad = VX360Gamepad()
-        self.gamepad.reset()
+        self.vgamepad = VX360Gamepad()
+        self.vgamepad.reset()
 
         # gamepad 键id
         self.ouput_id = [
@@ -29,14 +29,16 @@ class Gamepad():
             XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP,
             XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN,
         ]
+        # gamepad 摇杆函数
         self.ouput_func = [
-            self.gamepad.left_joystick_float,
-            self.gamepad.right_joystick_float,
-            self.gamepad.left_trigger_float,
-            self.gamepad.right_trigger_float,
+            self.vgamepad.left_joystick_float,
+            self.vgamepad.right_joystick_float,
+            self.vgamepad.left_trigger_float,
+            self.vgamepad.right_trigger_float,
         ]
-        self.ouput = self.ouput_id+self.ouput_func
+        # self.ouput = self.ouput_id+self.ouput_func
         self.history_keys_id: list[int] = []
+        # self.keys = keys
         pass
 
     def flush_vgamepad(self, keys: Union[dict[int, Key], list[Key]], delay: float = 0.00005) -> None:
@@ -55,15 +57,57 @@ class Gamepad():
             if key.__status__ == 1:
                 if key.type in ['key', 'dpad']:
                     if key.value[0]:
-                        self.gamepad.press_button(
-                            self.ouput[key.id])
+                        self.vgamepad.press_button(
+                            self.ouput_id[key.id])
                     else:
-                        self.gamepad.release_button(
-                            self.ouput[key.id])
-                elif key.type in ['LR', 'LRT']:
-                    self.ouput[key.id](*key.value)
-        self.gamepad.update()
+                        self.vgamepad.release_button(
+                            self.ouput_id[key.id])
+                elif key.type in ['L', 'R', 'LRT']:
+                    self.ouput_func[key.id-14](*key.value)
+        self.sync_vgamepad()
         sleep(delay)
+        pass
+
+    def flush_vgamepad_for_script(self, action: dict[Union[int, str], tuple[Union[bool, float]]], keys: Union[dict[int, Key], list[Key]]) -> None:
+        """根据键id与值, 直接更新虚拟手柄状态
+
+        (由于无论是否有状态改变, flush_vgamepad都会同步vgamepad, 所以本函数不会同步键状态)
+
+        :param actions: 脚本中的一步
+        :param keys: 按键列表
+        """
+        if type(keys) == dict:
+            keys_list: list[Key] = list(keys.values())
+        elif type(keys) == list:
+            keys_list: list[Key] = keys
+        else:
+            raise ValueError("keys类型不对, 应当是list或dict")
+        for action_id, action_value in action.items():
+            if type(action_id) == str:
+                pass
+            elif type(action_id) == int:
+                keys_list[action_id].set_value(*action_value)
+        pass
+
+    def reset_by_key_type(self, key_types: list[str], keys: Union[dict[int, Key], list[Key]]) -> None:
+        """将特定类型的按键重置
+
+        :param key_types: 按键类型
+        :param keys: 按键列表
+        """
+        if type(keys) == dict:
+            keys_list: list[Key] = list(keys.values())
+        elif type(keys) == list:
+            keys_list: list[Key] = keys
+        else:
+            raise ValueError("keys类型不对, 应当是list或dict")
+        for key_type in key_types:
+            if key_types == 'key':
+                for i in range(0, 10):
+                    keys_list[i].set_value(False)
+            elif key_type == 'dpad':
+                for i in range(10, 14):
+                    keys_list[i].set_value(False)
         pass
 
     def press(self, key: Key, delay: float = 0.0, update=True) -> None:
@@ -74,29 +118,29 @@ class Gamepad():
         :param update: 是否更新虚拟手柄状态, 默认 True
         """
         if key.type in ['key', 'dpad']:
-            self.gamepad.press_button(self.ouput[key.id])
-        elif key.type in ['LR', 'LRT']:
-            self.ouput[key.id](*key.value)
+            self.vgamepad.press_button(self.ouput_id[key.id])
+        elif key.type in ['L', 'R', 'LRT']:
+            self.ouput_func[key.id-14](*key.value)
         key.set_status(4)
         if update:
-            self.update()
+            self.sync_vgamepad()
         sleep(delay)
         pass
 
     def release(self, key: Key, delay: float = 0.0, update=True) -> None:
         """松开单个按键
 
-        :param key_id: 键ID, 0-17的整数
+        :param key: 键对象
         :param delay: 更新虚拟手柄状态后的延迟, 默认 0.0
         :param update: 是否更新虚拟手柄状态, 默认 True
         """
         if key.type in ['key', 'dpad']:
-            self.gamepad.release_button(self.ouput[key.id])
-        elif key.type in ['LR', 'LRT']:
-            self.ouput[key.id](*key.value)
+            self.vgamepad.release_button(self.ouput_id[key.id])
+        elif key.type in ['L', 'R', 'LRT']:
+            self.ouput_func[key.id-14](*key.value)
         key.set_status(4)
         if update:
-            self.update()
+            self.sync_vgamepad()
         sleep(delay)
         pass
 
@@ -116,7 +160,7 @@ class Gamepad():
         for key in keys_list:
             self.press(key, delay=0.0, update=False)
         if update:
-            self.update()
+            self.sync_vgamepad()
         sleep(delay)
         pass
 
@@ -136,7 +180,7 @@ class Gamepad():
         for key in keys_list:
             self.release(key, delay=0.0, update=False)
         if update:
-            self.update()
+            self.sync_vgamepad()
         sleep(delay)
         pass
 
@@ -157,11 +201,11 @@ class Gamepad():
         for key in keys_list:
             self.press(key, delay=time, update=False)
         if update:
-            self.update()
+            self.sync_vgamepad()
         for key in keys_list:
             self.release(key, update=False)
         if update:
-            self.update()
+            self.sync_vgamepad()
         pass
 
     def click(self, key: Key, time: float = 0.1, delay: float = 0.0, update=True) -> None:
@@ -176,16 +220,25 @@ class Gamepad():
         self.release(key, delay, update)
         pass
 
-    def reset(self) -> None:
-        """重置虚拟手柄至初始状态
-        """
-        self.gamepad.reset()
+    def reset_one(self, key: Key) -> None:
+        if key.type in ['key', 'dpad']:
+            key.set_value(False)
+        elif key.type in ['L', 'R']:
+            key.set_value(0.0, 0.0)
+        else:
+            key.set_value(0.0)
         pass
 
-    def update(self) -> None:
-        """将当前虚拟手柄的状态更新到实际输出中
+    def reset_vgamepad(self) -> None:
+        """重置虚拟手柄至初始状态
         """
-        self.gamepad.update()
+        self.vgamepad.reset()
+        pass
+
+    def sync_vgamepad(self) -> None:
+        """将当前状态同步到虚拟手柄中
+        """
+        self.vgamepad.update()
         pass
 
     def __update_history_keys__(self, keys: Union[dict[int, Key], list[Key]]) -> None:

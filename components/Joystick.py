@@ -19,7 +19,8 @@ class Joystick():
         self.skip: dict[str, bool] = {
             'key': False,
             'dpad': False,
-            'LR': False,
+            'L': False,
+            'R': False,
             'LRT': False,
         }
         pass
@@ -76,28 +77,28 @@ class Joystick():
                     key_id = 14
                     key_value1 = self.__get_axis_value__(event.value, 14)
                     key_value2 = keys_list[14].value[1]
-                    status = 1 if not self.skip['LR'] else 2
+                    status = 1 if not self.skip['L'] else 2
                     pass
                 elif event.axis == 1:
                     # LX 上下方向
                     key_id = 14
                     key_value1 = keys_list[14].value[0]
                     key_value2 = self.__get_axis_value__(-event.value, 14)
-                    status = 1 if not self.skip['LR'] else 2
+                    status = 1 if not self.skip['L'] else 2
                     pass
                 elif event.axis == 2:
                     # RX 左右方向
                     key_id = 15
                     key_value1 = self.__get_axis_value__(event.value, 15)
                     key_value2 = keys_list[15].value[1]
-                    status = 1 if not self.skip['LR'] else 2
+                    status = 1 if not self.skip['R'] else 2
                     pass
                 elif event.axis == 3:
                     # RX 上下方向
                     key_id = 15
                     key_value1 = keys_list[15].value[0]
                     key_value2 = self.__get_axis_value__(-event.value, 15)
-                    status = 1 if not self.skip['LR'] else 2
+                    status = 1 if not self.skip['R'] else 2
                     pass
                 elif event.axis == 4:
                     # LT
@@ -139,8 +140,11 @@ class Joystick():
         return round(result, 4)
 
     def __reset_skip__(self) -> None:
-        self.skip['key'] = False
-        self.skip['dpad'] = False
-        self.skip['LR'] = False
-        self.skip['LRT'] = False
+        self.skip: dict[str, bool] = {
+            'key': False,
+            'dpad': False,
+            'L': False,
+            'R': False,
+            'LRT': False,
+        }
         pass

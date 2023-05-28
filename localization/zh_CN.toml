@@ -1,0 +1,20 @@
+language = "zh_CN"
+
+# 脚本部分
+script_start = "脚本启动"
+script_end = "脚本结束"
+# 菜单脚本
+menu_script_name = "菜单脚本"
+menu_script_desc = "启动无按键触发的脚本"
+# 录制脚本
+record_script_name = "录制脚本"
+record_script_desc = "录制手柄操作, 并保存到文件"
+# 帮助脚本
+help_script_name = "帮助"
+help_script_desc = "打印帮助信息"
+help_script_content = "同时按住脚本设定的按键即可启用脚本。注意，有些脚本有按键顺序的要求。\n无按键触发的可通过‘手动激活脚本’触发\n脚本触发期间，无法操控\n觉得不满意的可以自行修改代码。\n以下脚本可直接通过按键触发。\n"
+help_script_sorted = "有顺序"
+help_script_not_sorted = "无顺序"
+# 荒野之息飞弹
+botw_fly_script_name = "荒野之息-飞弹"
+botw_fly_script_desc = "荒野之息飞弹, 需要有高低差"

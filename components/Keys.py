@@ -13,6 +13,11 @@ class Key():
     """
     # 键id的数量
     count: int = used_key_count+4
+    # 键状态
+    none: int = 0
+    updated: int = 1
+    skiped: int = 2
+    modified: int = 3
     # 辅助记忆的按键名对应id
     name_to_id: dict[str, int] = {
         'A': 0,
@@ -71,8 +76,8 @@ class Key():
         11: 'dpad',
         12: 'dpad',
         13: 'dpad',
-        14: 'LR',
-        15: 'LR',
+        14: 'L',
+        15: 'R',
         16: 'LRT',
         17: 'LRT',
     }
@@ -153,7 +158,7 @@ class Key():
     def __value_eq__(self, value1: tuple[Union[bool, float]], value2: tuple[Union[bool, float]]) -> bool:
         if value1 == value2:
             return True
-        elif self.type == 'LR':
+        elif self.type in ['L','R']:
             if abs(value1[0]-value2[0]) <= float_delta and abs(value1[1]-value2[1]) <= float_delta:
                 return True
         elif self.type == 'LRT':
